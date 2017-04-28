@@ -1,0 +1,22 @@
+- Buat model dan migration untuk questions
+- Buat model dan migration untuk comments
+- Buat model dan migration untuk tags
+- Buat model dan migration untuk posts
+- Buat model dan migration untuk user_voted_posts
+
+Pas buat question, otomatis buat post pertamanya. Question hanya berisi judul dari pertanyaan
+Semua post bisa diupvote. Kalau post adalah 'is_question', maka itu sama aja dengan vote question nya
+
+Tiap question bisa punya banyak tag
+Tiap post bisa dikasih comment
+
+
+
+- buat profile page
+- buat form insert new question
+- buat question page
+    - bisa comment post
+    - bisa post sesuatu sebagai answer
+    - bisa upvote tiap post (kalau first post, dianggap upvote question)
+
+
