@@ -14,11 +14,13 @@ class CreateUserVotedPostsTable extends Migration
     public function up()
     {
         Schema::create('user_voted_posts', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('post_id');
-            $table->primary(['user_id', 'post_id']);
+            $table->integer('user_id')->unsigned();
+            $table->integer('post_id')->unsigned();
+            $table->unique(['user_id', 'post_id']);
             $table->timestamps();
         });
+
+
     }
 
     /**

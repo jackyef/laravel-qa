@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserVotedCommentsTable extends Migration
+class CreateQuestionHasTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateUserVotedCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_voted_comments', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('comment_id');
-            $table->primary(['user_id', 'comment_id']);
+        Schema::create('question_has_tags', function (Blueprint $table) {
+            $table->integer('question_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
+            $table->unique(['question_id', 'tag_id']);
             $table->timestamps();
         });
+
     }
 
     /**
@@ -28,6 +29,6 @@ class CreateUserVotedCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_voted_comments');
+        Schema::dropIfExists('question_has_tags');
     }
 }

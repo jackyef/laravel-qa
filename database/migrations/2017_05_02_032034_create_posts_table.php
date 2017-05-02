@@ -17,15 +17,11 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('post_content');
             $table->integer('votes');
-            $table->integer('user_id');
-            $table->integer('question_id');
-            $table->foreign('question_id')
-                ->references('id')->on('questions')
-                ->onDelete('cascade')
-                ->onUpdate('cascade')
-                ->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('question_id')->unsigned();
             $table->timestamps();
         });
+
     }
 
     /**
