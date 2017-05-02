@@ -17,9 +17,9 @@ class Question extends Model
         return $this->belongsTo('User');
     }
     // each question can have one accepted answer
-    public function accepted_answer(){
-        return $this->hasOne('Post');
-    }
+//    public function accepted_answer(){
+//        return $this->hasOne('Post');
+//    }
 
     // each question can have many tags
     // define our pivot table also

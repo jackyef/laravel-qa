@@ -9,12 +9,27 @@
     <link href="{{url('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('css/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css">
     <script src="{{url('js/jquery.min.js')}}"></script>
+    <script src="{{url('js/moment.js')}}"></script>
     <script src="{{url('js/bootstrap.min.js')}}"></script>
     <script src="{{url('js/bootstrap-datepicker.js')}}"></script>
     <script src="{{url('js/bootstrap-select.js')}}"></script>
     <script src="{{url('js/material-kit.js')}}"></script>
     <script src="{{url('js/material.min.js')}}"></script>
     <script src="{{url('js/nouislider.min.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            $( "[data-time-format]" ).each(function() {
+                var el = $( this );
+                switch(el.attr("data-time-format")) {
+                    case "time-ago":
+                        var timeValue = el.attr("data-time-value")
+                        var strTimeAgo = moment.unix(timeValue).fromNow();
+                        el.text(strTimeAgo);
+                        break;
+                }
+            });
+        });
+    </script>
     <style>
         .tag:hover, .tag:visited{
             color: white;
@@ -56,7 +71,7 @@
                         </li>
                     @else
                         <li>
-                            <a data-toggle="modal" data-target="#loginModal">
+                            <a data-toggle="modal" data-target="#loginModal" href="#">
                                 Login/Sign up
                             </a>
                         </li>

@@ -12,89 +12,56 @@
         </select>
     </div>
     <div id="questions">
+        @foreach ($questions as $question)
+            <div class="card">
+                <div class="content">
+                    <div class="row" style="display: flex; justify-content: center; flex-direction: row">
+                        <div class="col-sm-2 hidden-xs">
+                            <center>
+                                <br/><span style="font-size: 1.7em">{{$question['votes']}}</span><br/>votes<br/><br/>
+                                <span class="label label-{{ $question['accepted_answer_id'] == 0 ? 'warning' : 'success' }}">{{ $question['accepted_answer_id'] == 0 ? 'Open' : 'Close' }}</span>
+                            </center>
+                        </div>
+                        <div class="col-sm-8">
+                            <br/>
+                            <div class="card-title" style="font-size: 1.4em;">
+                                <a href="{{url("/question/$question->id")}}">{{$question['question_title']}}</a>
+                            </div>
+                            <div class="card-description" style="font-size: .9em;">Asked
+                                <span data-time-format="time-ago" data-time-value="{{strtotime($question['created_at'])}}"></span>
+                                by {{$question['asker']}}
 
-        <div class="card">
-        <div class="content">
-            <div class="row" style="display: flex; justify-content: center; flex-direction: row">
-                <div class="col-sm-2 hidden-xs">
-                    <center>
-                        <br/><span style="font-size: 1.7em">3</span><br/>votes<br/><br/>
-                        <span class="label label-warning">Open</span>
-                    </center>
-                </div>
-                <div class="col-sm-8">
-                    <br/>
-                    <div class="card-title" style="font-size: 1.4em;">
-                        <a href="#">How do I check if a variable is empty in PHP?</a>
-                    </div>
-                    <div class="card-description" style="font-size: .9em;">Asked 3 mins ago by Jacky</div>
-                    <br/>
-                    <span class="tags">
-                        <a href="{{url('#')}}" class="tag"><span class="label label-info">#php</span></a>
-                        <a href="{{url('#')}}" class="tag"><span class="label label-info">#apache</span></a>
-                    </span>
-                </div>
-                <div class="col-sm-2 hidden-xs" style="align-self: center;">
-                    <div  style="vertical-align: middle">
-                        <table style="top:50%; position: relative;">
-                            <tr>
-                                <td><span class="fa fa-group"></span></td>
-                                <td>&nbsp;</td>
-                                <td><span style="font-size: .75em">1,204 viewers</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="fa fa-comments"></span></td>
-                                <td>&nbsp;</td>
-                                <td><span style="font-size: .75em">4 answers</span></td>
-                            </tr>
-                        </table>
+                            </div>
+                            <br/>
+                            <span class="tags">
+                                &nbsp;
+                            @foreach($question['tags'] as $tag)
+                                    <a href="{{url("/tag/$tag")}}" class="tag"><span class="label label-info">#{{$tag}}</span></a>
+                            @endforeach
+                            </span>
+                        </div>
+                        <div class="col-sm-2 hidden-xs" style="align-self: center;">
+                            <div  style="vertical-align: middle">
+                                <table style="top:50%; position: relative;">
+                                    {{--<tr>--}}
+                                        {{--<td><span class="fa fa-group"></span></td>--}}
+                                        {{--<td>&nbsp;</td>--}}
+                                        {{--<td><span style="font-size: .75em">1,204 viewers</span></td>--}}
+                                    {{--</tr>--}}
+                                    <tr>
+                                        <td><span class="fa fa-comments"></span></td>
+                                        <td>&nbsp;</td>
+                                        <td><span style="font-size: .75em">{{$question['answers']}} answers</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <hr/>
-    <div class="card">
-        <div class="content">
-            <div class="row" style="display: flex; justify-content: center; flex-direction: row">
-                <div class="col-sm-2 hidden-xs">
-                    <center>
-                        <br/><span style="font-size: 1.7em">94</span><br/>votes<br/><br/>
-                        <span class="label label-success">Answered</span>
-                    </center>
-                </div>
-                <div class="col-sm-8">
-                    <br/>
-                    <div class="card-title" style="font-size: 1.4em;">
-                        <a href="#">How do I check if a variable is empty in PHP?</a>
-                    </div>
-                    <div class="card-description" style="font-size: .9em;">Asked 3 mins ago by Jacky</div>
-                    <br/>
-                    <span class="tags">
-                        <a href="{{url('#')}}" class="tag"><span class="label label-info">#php</span></a>
-                        <a href="{{url('#')}}" class="tag"><span class="label label-info">#apache</span></a>
-                    </span>
-                </div>
-                <div class="col-sm-2 hidden-xs" style="align-self: center;">
-                    <div  style="vertical-align: middle">
-                        <table style="top:50%; position: relative;">
-                            <tr>
-                                <td><span class="fa fa-group"></span></td>
-                                <td>&nbsp;</td>
-                                <td><span style="font-size: .75em">94,212 viewers</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="fa fa-comments"></span></td>
-                                <td>&nbsp;</td>
-                                <td><span style="font-size: .75em">24 answers</span></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr/>
+            <hr/>
+        @endforeach
+
 
     </div>
 @stop

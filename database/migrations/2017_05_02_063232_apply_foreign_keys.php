@@ -19,16 +19,16 @@ class ApplyForeignKeys extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade')
                 ->unsigned();
-            $table->foreign('first_post_id')
-                ->references('id')->on('posts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->unsigned();
-            $table->foreign('accepted_answer_id')
-                ->references('id')->on('posts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->unsigned();
+//            $table->foreign('first_post_id')
+//                ->references('id')->on('posts')
+//                ->onUpdate('cascade')
+//                ->onDelete('cascade')
+//                ->unsigned();
+//            $table->foreign('accepted_answer_id')
+//                ->references('id')->on('posts')
+//                ->onUpdate('cascade')
+//                ->onDelete('cascade')
+//                ->unsigned();
         });
 
 
@@ -105,6 +105,33 @@ class ApplyForeignKeys extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('questions', function(Blueprint $table){
+            $table->dropForeign('questions_user_id_foreign');
+        });
+        Schema::table('posts', function(Blueprint $table){
+            $table->dropForeign('posts_question_id_foreign');
+        });
+        Schema::table('comments', function(Blueprint $table){
+            $table->dropForeign('comments_post_id_foreign');
+        });
+        Schema::table('question_has_tags', function(Blueprint $table){
+            $table->dropForeign('question_has_tags_question_id_foreign');
+        });
+        Schema::table('question_has_tags', function(Blueprint $table){
+            $table->dropForeign('question_has_tags_tag_id_foreign');
+        });
+        Schema::table('user_voted_posts', function(Blueprint $table){
+            $table->dropForeign('user_voted_posts_post_id_foreign');
+        });
+        Schema::table('user_voted_posts', function(Blueprint $table){
+            $table->dropForeign('user_voted_posts_user_id_foreign');
+        });
+        Schema::table('user_voted_comments', function(Blueprint $table){
+            $table->dropForeign('user_voted_comments_comment_id_foreign');
+        });
+        Schema::table('user_voted_comments', function(Blueprint $table){
+            $table->dropForeign('user_voted_comments_user_id_foreign');
+        });
+
     }
 }

@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->string('question_title');
             $table->integer('user_id')->unsigned();
-            $table->integer('first_post_id')->unsigned();
+//            $table->integer('first_post_id')->unsigned();
             $table->integer('accepted_answer_id')->unsigned();
             $table->timestamps();
         });
