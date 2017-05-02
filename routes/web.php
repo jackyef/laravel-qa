@@ -18,6 +18,7 @@ Route::post('/login', 'UserController@authLogin');
 Route::post('/signup', 'UserController@validateSignup');
 Route::get('/logout', 'UserController@logout');
 
+Route::get('/ask', 'QuestionController@newQuestionForm');
 
 Route::get('test', function () {
 	echo "Test without leading '/'";
