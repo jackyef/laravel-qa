@@ -1,11 +1,41 @@
-- Buat model dan migration untuk questions
-- Buat model dan migration untuk comments
-- Buat model dan migration untuk tags
-- Buat model dan migration untuk posts
-- Buat model dan migration untuk user_voted_posts
+- questions
+    - id
+    - question_title
+    - first_post_id
+    - accepted_answer_id ( 0 = open question, else the id of the post accepted as answer)
+    - user_id
+    - timestamp
+- posts
+    - id
+    - post_content
+    - votes
+    - user_id
+    - question_id //post in a question with id = ...
+    - timestamp
+- comments
+    - id
+    - comment
+    - votes
+    - user_id
+    - post_id //comments of post with id = ...
+    - timestamp
+- tags
+    - id
+    - tag
 
-Pas buat question, otomatis buat post pertamanya. Question hanya berisi judul dari pertanyaan
-Semua post bisa diupvote. Kalau post adalah 'is_question', maka itu sama aja dengan vote question nya
+Relationship:
+Question 1-n post
+post 1-n comment
+
+- question_has_tags
+    - question_id (primary)
+    - tag_id      (primary)
+- user_voted_posts (artisan make:migration create_user_voted_posts_table --create=user_voted_posts)
+    - user_id (primary)
+    - post_id (primary)
+- user_voted_comments
+    - user_id (primary)
+    - comment_id (primary)
 
 Tiap question bisa punya banyak tag
 Tiap post bisa dikasih comment
