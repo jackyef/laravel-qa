@@ -19,6 +19,8 @@ class Kernel extends HttpKernel
         \app\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \app\Http\Middleware\XSSProtection::class,
+        \app\Http\Middleware\PopularTagsMiddleware::class,
+
 
     ];
 
@@ -36,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \app\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \app\Http\Middleware\PopularTagsMiddleware::class,
         ],
 
         'api' => [
@@ -63,5 +66,6 @@ class Kernel extends HttpKernel
 		'terminate' => \app\Http\Middleware\TerminateMiddleware::class,
 		'First' => \app\Http\Middleware\FirstMiddleware::class,
 		'Second' => \app\Http\Middleware\SecondMiddleware::class,
+        'MyAuth' => \app\Http\Middleware\MyAuthMiddleware::class,
     ];
 }

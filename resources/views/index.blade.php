@@ -3,15 +3,34 @@
 @section('title', 'Laravel-based Q&A Forum');
 
 @section('content')
+    <script>
+        $(document).ready(function () {
+            $("#filter-picker").on('change', function(){
+                window.location.href = "{{url('/?filter=')}}" + $("#filter-picker").val();
+            });
+        });
+    </script>
+    <h3>All Questions</h3>
     <div>
-        <select class="selectpicker" style="background: white !important;">
-            <option>Recent</option>
-            <option>Trending</option>
-            <option>Open</option>
-            <option>Answered</option>
+        <select class="selectpicker" id="filter-picker" style="background: white !important;">
+            <option value="recent"   {{$filter === "recent" ? 'selected' : ''}} >Recent</option>
+{{--            <option value="trending" {{$filter === "trending" ? 'selected' : ''}} >Trending</option>--}}
+            <option value="open"     {{$filter === "open" ? 'selected' : ''}} >Open</option>
+            <option value="answered" {{$filter === "answered" ? 'selected' : ''}} >Answered</option>
         </select>
+        <!-- pagination controls -->
+        <div class="pull-right">
+            {{$questions->links()}}
+        </div>
     </div>
     <div id="questions">
+        @if (sizeof($questions) == 0)
+            <div class="jumbotron">
+                <center>
+                    <h6>No questions found</h6>
+                </center>
+            </div>
+        @endif
         @foreach ($questions as $question)
             <div class="card">
                 <div class="content">
@@ -62,6 +81,10 @@
             <hr/>
         @endforeach
 
+        <!-- pagination controls -->
+        <div class="pull-right">
+            {{$questions->links()}}
+        </div>
 
     </div>
 @stop

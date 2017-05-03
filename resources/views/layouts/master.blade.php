@@ -8,7 +8,9 @@
     <link href="{{url('css/material-kit.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('css/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url('css/tokenize2.min.css')}}" rel="stylesheet" type="text/css">
     <script src="{{url('js/jquery.min.js')}}"></script>
+    <script src="{{url('js/jquery-ui.min.js')}}"></script>
     <script src="{{url('js/moment.js')}}"></script>
     <script src="{{url('js/bootstrap.min.js')}}"></script>
     <script src="{{url('js/bootstrap-datepicker.js')}}"></script>
@@ -16,6 +18,7 @@
     <script src="{{url('js/material-kit.js')}}"></script>
     <script src="{{url('js/material.min.js')}}"></script>
     <script src="{{url('js/nouislider.min.js')}}"></script>
+    <script src="{{url('js/tokenize2.min.js')}}"></script>
     <script>
         $(document).ready(function(){
             $( "[data-time-format]" ).each(function() {

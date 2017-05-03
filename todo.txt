@@ -41,12 +41,32 @@ Tiap question bisa punya banyak tag
 Tiap post bisa dikasih comment
 
 
-
 - buat profile page
 - buat form insert new question
 - buat question page
     - bisa comment post
     - bisa post sesuatu sebagai answer
     - bisa upvote tiap post (kalau first post, dianggap upvote question)
+
+=======
+Done
+
+=======
+- Complete index page:
+    - infinite scroll by using AJAX OR pagination
+    - fetch data dynamically when changing category (recent, trending, open, etc).
+    - 10 items per fetch
+
+- Ask question function:
+    - DONE!
+
+- View question page:
+    - Vote each post
+    - Give answer
+    - Accept as answer (if session is question asker)
+
+- View by tags:
+
+- User profile:
 
 

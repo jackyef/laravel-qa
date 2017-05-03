@@ -4,7 +4,9 @@ namespace app\Http\Controllers;
 
 use app\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
@@ -41,7 +43,15 @@ class UserController extends Controller
 	        $request->session()->put('username', $users[0]->username);
 	        $request->session()->put('email', $users[0]->email);
 	        $request->session()->put('id', $users[0]->id);
-        } else {
+//
+//        $user = array(
+//            'username' => Input::get('username'),
+//            'password' => sha1(Input::get('password')),
+//        );
+//        if(Auth::attempt($user)){
+//	        $request->session()->regenerateToken();
+//	        $request->session()->put('username', $user->username);
+	    } else {
             $request->session()->flash('notification', TRUE);
             $request->session()->flash('notification_type', 'danger');
             $request->session()->flash('notification_msg', 'Invalid username/password');

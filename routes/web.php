@@ -12,13 +12,23 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', 'MainController@index');
+Route::get('/login', function(){
+    if(Session::has('username')) return redirect()->action('MainController@index');
+    return view('login');
+});
 Route::post('/login', 'UserController@authLogin');
 Route::post('/signup', 'UserController@validateSignup');
 Route::get('/logout', 'UserController@logout');
 
 Route::get('/ask', 'QuestionController@newQuestionForm');
+Route::post('/ask', 'QuestionController@newQuestionSubmit');
+
+
+// for testing only!
+// Route::get('/seed', 'MainController@seed');
 
 Route::get('test', function () {
 	echo "Test without leading '/'";
