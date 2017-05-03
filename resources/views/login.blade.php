@@ -60,14 +60,14 @@
         <div class="content">
             <div class="tab-content">
                 <div class="tab-pane active" id="login">
-                    <form action="{{url('/validation')}}" method="POST">
+                    <form action="{{url('/login')}}" method="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group label-floating">
                             <label class="control-label" for="username">Username</label>
                             <input class="form-control" type="text" name="username" />
                             <span class="form-control-feedback">
-                                <i class="fa fa-check"></i>
-                            </span>
+                                                <i class="fa fa-check"></i>
+                                            </span>
                         </div>
                         <div class="form-group label-floating">
                             <label class="control-label" for="password">Password</label>
@@ -80,14 +80,21 @@
                     </form>
                 </div>
                 <div class="tab-pane" id="signup">
-                    <form action="{{url('/validation')}}" method="POST">
+                    <form action="{{url('/signup')}}" method="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="email">Email</label>
+                            <input class="form-control" type="email" name="email" />
+                            <span class="form-control-feedback">
+                                                <i class="fa fa-times"></i>
+                                            </span>
+                        </div>
                         <div class="form-group label-floating">
                             <label class="control-label" for="username">Username</label>
                             <input class="form-control" type="text" name="username" />
                             <span class="form-control-feedback">
-                                <i class="fa fa-check"></i>
-                            </span>
+                                                <i class="fa fa-check"></i>
+                                            </span>
                         </div>
                         <div class="form-group label-floating">
                             <label class="control-label" for="password">Password</label>
