@@ -72,7 +72,85 @@ class QuestionController extends Controller
         $request->session()->flash('notification_type', 'success');
         $request->session()->flash('notification_msg', 'Question asked! You will be notified when people give answers to your question!');
 
-        // TODO: redirect to question detail page when it's done
-        return redirect()->action('MainController@index');
+        return redirect()->action('MainController@question', ['question' => $question_id]);
+    }
+
+    public function votePost($post_id, Request $request){
+        DB::beginTransaction();
+
+        try {
+            DB::insert("
+                INSERT INTO user_voted_posts 
+                (post_id, user_id)
+                VALUES
+                (?, ?)
+            ", [$post_id, $request->session()->get('id')]);
+
+            DB::update("
+                UPDATE posts
+                SET votes = votes + 1
+                WHERE id = ?
+            ", [$post_id]);
+            DB::commit();
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'success');
+            $request->session()->flash('notification_msg', 'Your vote has been counted! Thank you for your input for the community!');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'danger');
+            $request->session()->flash('notification_msg', 'Uh oh, something went wrong while trying to register your vote.');
+        }
+
+        return redirect()->to(url()->previous().'#'. $post_id);
+    }
+
+    public function answer(Request $request){
+
+        try {
+            $post = new Post();
+            $post->post_content = Input::get('post_content');
+            $post->user_id = Session::get('id');
+            $post->votes = 0;
+            $post->question_id = Input::get('question_id');
+            $post->save();
+
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'success');
+            $request->session()->flash('notification_msg', 'Your answer is posted! Thank you for your input for the community!');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'danger');
+            $request->session()->flash('notification_msg', 'Uh oh, something went wrong while trying to take your answer.');
+        }
+
+        return redirect()->to(url()->previous());
+    }
+
+    public function acceptAnswer(Request $request){
+        try {
+
+            $question = Question::find(Input::get('question_id'));
+            $question->accepted_answer_id = Input::get('post_id');
+            $question->save();
+
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'success');
+            $request->session()->flash('notification_msg', 'You have accepted an answer! Thank you for your input for the community!');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'danger');
+            $request->session()->flash('notification_msg', 'Uh oh, something went wrong while trying to accept an answer.');
+        }
+
+        return redirect()->to(url()->previous(). '#' . Input::get('post_id'));
     }
 }

@@ -61,12 +61,24 @@ Done
     - DONE!
 
 - View question page:
-    - Vote each post
-    - Give answer
-    - Accept as answer (if session is question asker)
+    - Vote each post (DONE!)
+    - Give answer (DONE!)
+    - Accept as answer (if session is question asker) (DONE!)
+    - Give comment
+    - Vote each comment
 
 - View by tags:
 
 - User profile:
+
+- Admin stuffs:
+    - Add tags
+    - Edit question
+    - Edit post
+    - Edit comment
+    - Delete question
+    - Delete post
+    - Delete comment
+
 
 

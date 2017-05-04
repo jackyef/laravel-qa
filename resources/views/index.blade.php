@@ -38,7 +38,7 @@
                         <div class="col-sm-2 hidden-xs">
                             <center>
                                 <br/><span style="font-size: 1.7em">{{$question['votes']}}</span><br/>votes<br/><br/>
-                                <span class="label label-{{ $question['accepted_answer_id'] == 0 ? 'warning' : 'success' }}">{{ $question['accepted_answer_id'] == 0 ? 'Open' : 'Close' }}</span>
+                                <span class="label label-{{ $question['accepted_answer_id'] == 0 ? 'warning' : 'success' }}">{{ $question['accepted_answer_id'] == 0 ? 'Open' : 'Answered' }}</span>
                             </center>
                         </div>
                         <div class="col-sm-8">

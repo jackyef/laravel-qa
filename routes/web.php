@@ -26,9 +26,13 @@ Route::get('/logout', 'UserController@logout');
 Route::get('/ask', 'QuestionController@newQuestionForm');
 Route::post('/ask', 'QuestionController@newQuestionSubmit');
 
+Route::get('/question/{question}', 'MainController@question');
+Route::get('/vote/{post_id}', 'QuestionController@votePost');
+Route::post('/question/answer', 'QuestionController@answer');
+Route::post('/question/accept-answer', 'QuestionController@acceptAnswer');
 
 // for testing only!
-// Route::get('/seed', 'MainController@seed');
+//Route::get('/seed', 'MainController@seed');
 
 Route::get('test', function () {
 	echo "Test without leading '/'";
