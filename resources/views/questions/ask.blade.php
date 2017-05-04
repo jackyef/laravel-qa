@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'LaravelQA - Ask a question');
+@section('title', 'Ask a question');
 
 @section('content')
     <style>

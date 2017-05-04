@@ -31,6 +31,14 @@
                         break;
                 }
             });
+
+//            setTimeout(function(){
+//                $(".notification").fadeIn('slow');
+//            }, 200);
+//
+//            setTimeout(function(){
+//                $(".notification").fadeOut('slow');
+//            }, 2000);
         });
     </script>
     <style>
@@ -40,6 +48,15 @@
         .tags{
             line-height: 2.3em;
             font-size: .8em;
+        }
+        .notification{
+            /*display: none;*/
+            position: fixed;
+            z-index: 9999;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0 auto;
+            transition: .5s;
         }
     </style>
 </head>
@@ -104,7 +121,7 @@
                     <br/>
                     @section('notification')
                         @if(Session::has('notification'))
-                            <div class="alert alert-{{Session::get('notification_type', 'info')}}">
+                            <div class="notification alert alert-{{Session::get('notification_type', 'info')}}">
                                 <div class="container-fluid">
                                     <div class="alert-icon">
                                         <i class="fa fa-2x fa-info-circle"></i>

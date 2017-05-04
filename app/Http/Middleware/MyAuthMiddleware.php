@@ -20,7 +20,7 @@ class MyAuthMiddleware
             Session::flash('notification', TRUE);
             Session::flash('notification_type', 'danger');
             Session::flash('notification_msg', 'You need to log in to do that.');
-            return redirect()->action('MainController@index');
+            return redirect()->back();
         }
         return $next($request);
     }

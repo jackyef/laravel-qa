@@ -2,9 +2,11 @@
 
 namespace app\Http\Controllers;
 
+use app\Post;
 use app\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller
 {
@@ -90,30 +92,152 @@ class MainController extends Controller
 
         }
 
-//        // get 10 most popular tags
-//        $tags = DB::select("
-//                SELECT qht.tag_id as 'tag_id', t.tag as 'tag', COUNT(qht.tag_id) as 'count'
-//                FROM question_has_tags qht, tags t
-//                WHERE
-//                  qht.tag_id = t.id
-//                GROUP BY
-//                  qht.tag_id, t.tag
-//                ORDER BY
-//                  count DESC
-//            ");
-//        $data['popular_tags'] = $tags;
-
         return view('index', $data);
     }
 
+    public function question($question_id){
+        $data = [];
+        $data['question'] = DB::select("
+            SELECT 
+              q.*, 
+              u.username as 'username', 
+              u.id as 'user_id'
+            FROM questions q, users u
+            WHERE
+              q.id = ? AND 
+              q.user_id = u.id 
+            ", [$question_id])[0];
+
+        $tags = DB::select("
+                    SELECT 
+                      t.tag 
+                    FROM 
+                      tags t, question_has_tags qht 
+                    WHERE
+                      qht.question_id = ? AND
+                      qht.tag_id = t.id
+                ", [$question_id]);
+
+        $result_tags = [];
+        foreach($tags as $tag){
+            array_push($result_tags, $tag->tag);
+        }
+        $data['question_tags'] = $result_tags;
+        $data['first_post'] = DB::select("
+            SELECT 
+                p.*, 
+                u.username as 'username', 
+                u.id as 'user_id'
+            FROM posts p, users u
+            WHERE 
+                p.question_id = ? AND 
+                p.user_id = u.id 
+            ORDER BY
+                p.id ASC
+            LIMIT 1
+            ", [$question_id])[0];
+
+        $data['last_post'] = DB::select("
+            SELECT 
+                p.*, 
+                u.username as 'username', 
+                u.id as 'user_id'
+            FROM posts p, users u
+            WHERE 
+                p.question_id = ? AND 
+                p.user_id = u.id 
+            ORDER BY
+                p.id DESC
+            LIMIT 1
+            ", [$question_id])[0];
+
+        $data['answers'] = Post::where('question_id', $question_id)->offset(1)->paginate(10);
+        foreach($data['answers'] as $answer){
+            $user = DB::select("
+                    SELECT
+                      u.id as 'user_id', u.username as 'username'
+                    FROM
+                      posts p, users u
+                    WHERE
+                      p.id = ? AND 
+                      u.id = p.user_id
+                    ORDER BY
+                      p.id ASC
+                    LIMIT 1
+                ", [$answer['id']]);
+
+            $answer['user_id'] = $user[0]->user_id;
+            $answer['username'] = $user[0]->username;
+        }
+        foreach($data['answers'] as $answer){
+            $voted = DB::select("
+                    SELECT *
+                    FROM user_voted_posts 
+                    WHERE 
+                      user_id = ? AND 
+                      post_id = ?
+                    LIMIT 1
+                ", [Session::get('id'), $answer['id']]);
+
+            $voted = sizeof($voted) === 1;
+            $answer['voted'] = $voted;
+        }
+        if($data['question']->accepted_answer_id !== 0){
+            $data['accepted_answer'] = DB::select("
+            SELECT 
+                p.*, 
+                u.username as 'username', 
+                u.id as 'user_id'
+            FROM posts p, users u
+            WHERE 
+                p.question_id = ? AND 
+                p.user_id = u.id AND 
+                p.id = ?
+            ORDER BY
+                p.id DESC
+            LIMIT 1
+            ", [$question_id, $data['question']->accepted_answer_id])[0];
+
+            $voted = DB::select("
+                    SELECT *
+                    FROM user_voted_posts 
+                    WHERE 
+                      user_id = ? AND 
+                      post_id = ?
+                    LIMIT 1
+                ", [Session::get('id'), $data['question']->accepted_answer_id]);
+
+            $voted = sizeof($voted) === 1;
+            $data['accepted_answer']->voted = $voted;
+        }
+
+        return view('questions.view', $data);
+    }
+
     public function seed(){
-        while(true){
-            $question_id = random_int(1,23);
-            $tag_id = random_int(1,5);
+//        while(true){
+//            $question_id = random_int(1,23);
+//            $tag_id = random_int(1,5);
+//            DB::insert("
+//                INSERT INTO question_has_tags (question_id, tag_id)
+//                VALUES (?, ?)
+//            ", [$question_id, $tag_id]);
+//        }
+
+        $tags = ['life', 'love', 'software-engineering', 'software-development', 'web-development', 'food', 'culinary',
+                'react-native', 'react', 'codeigniter3', 'codeigniter2', 'codeigniter', 'relationship', 'language',
+                'social-convention', 'social-network', 'bootstrap', 'bootstrap-css', 'foundation-css', 'express.js',
+                'mongodb', 'linux', 'windows', 'windows-7', 'windows-10', 'linux-ubuntu', 'writing', 'literature',
+                'vacation', 'world-problem', 'ios', '.net', 'mac-OS', 'ASP', 'C', 'C++', 'C#', 'python', 'python3',
+                'ruby', 'ruby-on-rails', 'django', 'flask', 'javascript', 'es6', 'es7', 'es5', 'wordpress',
+                'drupal', 'node.js', 'angular', 'angular2'];
+
+        foreach($tags as $tag){
             DB::insert("
-                INSERT INTO question_has_tags (question_id, tag_id)
-                VALUES (?, ?)
-            ", [$question_id, $tag_id]);
+                INSERT INTO tags (tag)
+                VALUES (?)
+            ", [$tag]);
         }
     }
+
 }
