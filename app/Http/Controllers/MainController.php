@@ -214,6 +214,105 @@ class MainController extends Controller
         return view('questions.view', $data);
     }
 
+    public function tag($tag, Request $request){
+        $data['filter'] = $request->filter ?: 'recent';
+        $filter = $data['filter'];
+        $data['page'] = $request->page ?: 1;
+        $page = $data['page'];
+        $data['limit'] = $request->limit ?: 10;
+
+        $data['tag'] = $tag;
+
+        $tag_id = DB::select("
+                SELECT * FROM tags WHERE tag = ?
+            ", [$tag])[0]->id;
+
+        $questions = DB::select("
+                SELECT question_id FROM question_has_tags WHERE tag_id = ?
+            ", [$tag_id]);
+
+        $question_ids = array();
+        foreach($questions as $question){
+            array_push($question_ids, $question->question_id);
+        }
+        if($data['filter'] == 'recent'){
+            $questions = Question::orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc');
+        } else if($data['filter'] == 'trending'){
+            // implement some kind of algorithm to fetch based on trending questions
+        } else if($data['filter'] == 'open'){
+            $questions = Question::where('accepted_answer_id', 0)
+                ->orderBy('created_at', 'desc');
+        } else if($data['filter'] == 'answered'){
+            $questions = Question::where('accepted_answer_id', '<>', 0)
+                ->orderBy('created_at', 'desc');
+        } else {
+            // fallback if user entered random gibberish in the url
+            $questions = Question::orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc');;
+        }
+        $questions = $questions->whereIn('id', $question_ids)->paginate($data['limit']);
+
+        $questions->setPath(url("/$tag/?filter=$filter"));
+
+        $data['questions'] = $questions;
+
+//        $data['questions'] = Question::limit(5)->offset(0)->get();
+//        $data['questions'] = $questions->results;
+//        $data['questions_links'] = $questions->links();
+
+        foreach ($data['questions'] as $question){
+            $tags = DB::select("
+                    SELECT 
+                      t.tag 
+                    FROM 
+                      tags t, question_has_tags qht 
+                    WHERE
+                      qht.question_id = ? AND
+                      qht.tag_id = t.id
+                ", [$question['id']]);
+
+            $result_tags = [];
+            foreach($tags as $tag){
+                array_push($result_tags, $tag->tag);
+            }
+            $question['tags'] = $result_tags;
+
+            $first_post = DB::select("
+                    SELECT
+                      p.votes, p.user_id, u.username
+                    FROM
+                      posts p, users u, questions q
+                    WHERE
+                      q.id = ? AND 
+                      p.question_id = q.id AND 
+                      u.id = p.user_id
+                    ORDER BY
+                      p.id ASC
+                    LIMIT 1
+                ", [$question['id']]);
+
+            $question['votes'] = $first_post[0]->votes;
+            $question['asker'] = $first_post[0]->username;
+
+            $answers_count = DB::select("
+                    SELECT
+                      p.*
+                    FROM
+                      posts p
+                    WHERE
+                      p.question_id = ?
+                    ORDER BY
+                      p.id ASC
+                ", [$question['id']]);
+
+            $question['answers'] = sizeof($answers_count)-1;
+
+        }
+
+        return view('tags.view', $data);
+    }
+
     public function seed(){
 //        while(true){
 //            $question_id = random_int(1,23);

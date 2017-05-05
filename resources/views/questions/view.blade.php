@@ -1,12 +1,18 @@
 @extends('layouts.master')
 
-@section('title', 'Ask a question');
+@section('title')
+    {{$question->question_title}}
+@stop
 
 @section('content')
     <style>
         .tags-picker{
             border: 0px solid black;
 
+        }
+        .post{
+            font-size: 1.3em;
+            padding: .6em;
         }
         .poster{
             font-size: .8em;
@@ -21,6 +27,12 @@
         .unvoted:hover{
             color: #333399;
             transition-duration: .3s;
+        }
+        .btn-accept{
+            opacity: .5;
+        }
+        .btn-accept:hover{
+            opacity: 1;
         }
 
     </style>
@@ -43,11 +55,11 @@
     <br/>
     <div class="row" id="{{$answers[0]->id}}">
         <div class="col-xs-12">
-            <div class="col-sm-10 h5">
+            <div class="col-xs-10 post">
                 {!! nl2br($first_post->post_content) !!}
             </div>
 
-            <div class="col-sm-2">
+            <div class="col-xs-2">
                 <center>
                     &nbsp;<a href="
                             {{ (!$answers[0]->voted) ? url("/vote/".$answers[0]->id) : '#'}}"
@@ -56,8 +68,9 @@
                                 unvoted
                             @endif
                             fa fa-3x fa-caret-up"></span></a>
-                    <br/><span style="font-size: 1.7em">{{$first_post->votes}}</span><br/>votes<br/><br/>
-                    <span class="label label-{{ $question->accepted_answer_id == 0 ? 'warning' : 'success' }}">{{ $question->accepted_answer_id == 0 ? 'Open' : 'Answered' }}</span>
+                    <br/><span style="font-size: 1.7em">{{$first_post->votes}}</span><br/><span class="hidden-xs">votes<br/></span><br/>
+                    <span class="hidden-xs label label-{{ $question->accepted_answer_id == 0 ? 'warning' : 'success' }}">{{ $question->accepted_answer_id == 0 ? 'Open' : 'Answered' }}</span>
+                    <span class="visible-xs label label-{{ $question->accepted_answer_id == 0 ? 'warning' : 'success' }}" style="padding: .3em 0 .3em 0">{!! $question->accepted_answer_id == 0 ? '<i class="fa fa-comments"></i>' : '<i class="fa fa-check"></i>' !!}</span>
                 </center>
                 <br/>
             </div>
@@ -68,10 +81,10 @@
         <h3>Accepted answer</h3>
         <div class="row">
             <div class="col-xs-12">
-                <div class="col-sm-10 h5">
+                <div class="col-xs-10 post">
                     {!! nl2br($accepted_answer->post_content) !!}
                 </div>
-                <div class="col-sm-2">
+                <div class="col-xs-2">
                     <center>
                         &nbsp;<a href="
                                 {{ (!$accepted_answer->voted) ? url("/vote/$accepted_answer->id") : '#'}}"
@@ -80,25 +93,30 @@
                                     unvoted
                                 @endif
                                     fa fa-3x fa-caret-up"></span></a>
-                        <br/><span style="font-size: 1.7em">{{$accepted_answer->votes}}</span><br/>votes<br/><br/>
+                        <br/><span style="font-size: 1.7em">{{$accepted_answer->votes}}</span><br/><span class="hidden-xs">votes<br/></span><br/>
                         @if (Session::get('id') === $first_post->user_id && $question->accepted_answer_id === 0)
                             <form action="{{url("/question/accept-answer")}}" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="question_id" value="{{$question->id}}">
                                 <input type="hidden" name="post_id" value="{{$accepted_answer->id}}">
-                                <button class="btn btn-success btn-sm btn-round"><span class="fa fa-check"></span> Accept</button>
+                                <button class="btn btn-success btn-sm btn-round"><span class="fa fa-check-box"></span><span class="hidden-xs"> Accept</span></button>
                             </form>
                         @endif
                         @if ($question->accepted_answer_id === $accepted_answer->id)
-                            <span class="label label-sm label-success"><span class="fa fa-check"></span> Answer</span>
+                            <span class="hidden-xs label label-sm label-success"><span class="fa fa-check"></span> Answer</span>
+                            <span class="visible-xs label label-sm label-success" style="padding: .3em 0 .3em 0"><span class="fa fa-check"></span></span>
                         @endif
                     </center>
                     <br/>
                 </div>
-                <div class="col-sm-12 poster">
-                    answer given by
-                    <a href="{{url("/profile/$accepted_answer->user_id")}}">
-                        {{$accepted_answer->username}}</a> on <span data-time-format="time-ago" data-time-value="{{strtotime($accepted_answer->created_at)}}"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-sm-12 poster">
+                        answer given by
+                        <a href="{{url("/profile/$accepted_answer->user_id")}}">
+                            {{$accepted_answer->username}}</a> on <span data-time-format="time-ago" data-time-value="{{strtotime($accepted_answer->created_at)}}"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,10 +133,10 @@
             @if ($answer->id == $first_post->id) @continue @endif <!-- not showing the first post twice -->
             <div class="row" id="{{$answer->id}}">
                 <div class="col-xs-12">
-                    <div class="col-sm-10 h5">
+                    <div class="col-xs-10 post">
                         {!! nl2br($answer->post_content) !!}
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-xs-2">
                         <center>
                             &nbsp;<a href="
                                     {{ (!$answer->voted) ? url("/vote/$answer->id") : '#'}}"
@@ -127,25 +145,30 @@
                                         unvoted
                                     @endif
                                     fa fa-3x fa-caret-up"></span></a>
-                            <br/><span style="font-size: 1.7em">{{$answer->votes}}</span><br/>votes<br/><br/>
+                            <br/><span style="font-size: 1.7em">{{$answer->votes}}</span><br/><span class="hidden-xs">votes<br/></span><br/>
                             @if (Session::get('id') === $first_post->user_id && $question->accepted_answer_id === 0)
                                 <form action="{{url("/question/accept-answer")}}" method="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="question_id" value="{{$question->id}}">
                                     <input type="hidden" name="post_id" value="{{$answer->id}}">
-                                    <button class="btn btn-success btn-sm btn-round"><span class="fa fa-check"></span> Accept</button>
+                                    <button class="btn btn-success btn-xs btn-round btn-accept" style="padding: .5em"><span class="fa fa-check"></span><span class="hidden-xs"> Accept</span></button>
                                 </form>
                             @endif
                             @if ($question->accepted_answer_id === $answer->id)
-                                <span class="label label-sm label-success"><span class="fa fa-check"></span> Answer</span>
+                                <span class="hidden-xs label label-sm label-success"><span class="fa fa-check"></span> Answer</span>
+                                <span class="visible-xs label label-sm label-success" style="padding: .3em 0 .3em 0"><span class="fa fa-check"></span></span>
                             @endif
                         </center>
                         <br/>
                     </div>
-                    <div class="col-sm-12 poster">
-                        answer given by
-                        <a href="{{url("/profile/$answer->user_id")}}">
-                            {{$answer->username}}</a> on <span data-time-format="time-ago" data-time-value="{{strtotime($answer->created_at)}}"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-sm-12 poster">
+                            answer given by
+                            <a href="{{url("/profile/$answer->user_id")}}">
+                                {{$answer->username}}</a> on <span data-time-format="time-ago" data-time-value="{{strtotime($answer->created_at)}}"></span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -31,6 +31,8 @@ Route::get('/vote/{post_id}', 'QuestionController@votePost');
 Route::post('/question/answer', 'QuestionController@answer');
 Route::post('/question/accept-answer', 'QuestionController@acceptAnswer');
 
+Route::get('/tag/{tag}', 'MainController@tag');
+
 // for testing only!
 //Route::get('/seed', 'MainController@seed');
 
