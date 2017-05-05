@@ -54,14 +54,18 @@
             position: fixed;
             z-index: 9999;
             left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            transform: translate(-50%, -50%);
             margin: 0 auto;
             transition: .5s;
         }
     </style>
+    <script>
+
+    </script>
 </head>
 
-<body>
+<body style="overflow-x: hidden">
     @section('navbar') <!-- navbar-->
     <nav class="navbar navbar-fixed-top ">
         <div class="container">
@@ -119,6 +123,7 @@
                 <div class="row">
                     <br/>
                     <br/>
+                    <br/>
                     @section('notification')
                         @if(Session::has('notification'))
                             <div class="notification alert alert-{{Session::get('notification_type', 'info')}}">
@@ -138,7 +143,7 @@
                     @show
                     @section('errors')
                         @if(count($errors) > 0)
-                            <div class="alert alert-danger">
+                            <div class="notification alert alert-danger">
                                 <div class="container-fluid">
                                     <div class="alert-icon">
                                         <i class="fa fa-2x fa-warning"></i>

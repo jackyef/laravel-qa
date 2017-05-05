@@ -20,6 +20,7 @@
                 <span class="tags">
                     @foreach (Session::get('popular_tags') as $tag)
                         <a href="{{url("/tag/$tag->tag")}}" class="tag"><span class="label label-info">#{{$tag->tag}}</span></a>
+                        &nbsp;
                     @endforeach
                     &nbsp;
                 </span>

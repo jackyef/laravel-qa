@@ -6,15 +6,15 @@
     <script>
         $(document).ready(function () {
             $("#filter-picker").on('change', function(){
-                window.location.href = "{{url('/?filter=')}}" + $("#filter-picker").val();
+                window.location.href = "{{url('/tag/'.$tag.'?filter=')}}" + $("#filter-picker").val();
             });
         });
     </script>
-    <h3>All Questions</h3>
+    <h3>Questions tagged with: #{{$tag}}</h3>
     <div>
         <select class="selectpicker" id="filter-picker" style="background: white !important;">
             <option value="recent"   {{$filter === "recent" ? 'selected' : ''}} >Recent</option>
-{{--            <option value="trending" {{$filter === "trending" ? 'selected' : ''}} >Trending</option>--}}
+            {{--            <option value="trending" {{$filter === "trending" ? 'selected' : ''}} >Trending</option>--}}
             <option value="open"     {{$filter === "open" ? 'selected' : ''}} >Open</option>
             <option value="answered" {{$filter === "answered" ? 'selected' : ''}} >Answered</option>
         </select>
@@ -55,16 +55,16 @@
                             <br/>
                             <span class="tags">
                             @foreach($question['tags'] as $tag)<a href="{{url("/tag/$tag")}}" class="tag"><span class="label label-info">#{{$tag}}</span></a>&nbsp;
-                            @endforeach
+                                @endforeach
                             </span>
                         </div>
                         <div class="col-sm-2 hidden-xs" style="align-self: center;">
                             <div  style="vertical-align: middle">
                                 <table style="top:50%; position: relative;">
                                     {{--<tr>--}}
-                                        {{--<td><span class="fa fa-group"></span></td>--}}
-                                        {{--<td>&nbsp;</td>--}}
-                                        {{--<td><span style="font-size: .75em">1,204 viewers</span></td>--}}
+                                    {{--<td><span class="fa fa-group"></span></td>--}}
+                                    {{--<td>&nbsp;</td>--}}
+                                    {{--<td><span style="font-size: .75em">1,204 viewers</span></td>--}}
                                     {{--</tr>--}}
                                     <tr>
                                         <td><span class="fa fa-comments"></span></td>
@@ -78,9 +78,9 @@
                 </div>
             </div>
             <hr/>
-        @endforeach
+    @endforeach
 
-        <!-- pagination controls -->
+    <!-- pagination controls -->
         <div class="pull-right">
             {{$questions->links()}}
         </div>

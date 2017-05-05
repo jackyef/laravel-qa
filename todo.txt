@@ -64,10 +64,11 @@ Done
     - Vote each post (DONE!)
     - Give answer (DONE!)
     - Accept as answer (if session is question asker) (DONE!)
-    - Give comment
-    - Vote each comment
+    - Give comment (optional)
+    - Vote each comment (optional)
 
-- View by tags:
+- View by tag:
+    - DONE!
 
 - User profile:
 
