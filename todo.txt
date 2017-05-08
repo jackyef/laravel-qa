@@ -62,6 +62,7 @@ Done
 
 - View question page:
     - Vote each post (DONE!)
+    - Unvote each post (DONE!)
     - Give answer (DONE!)
     - Accept as answer (if session is question asker) (DONE!)
     - Give comment (optional)
@@ -69,11 +70,21 @@ Done
 
 - View by tag:
     - DONE!
+- Design about page
+    - DONE!
+- Design readme.md
+    -
 
 - User profile:
+    - show email (DONE!)
+    - join date (DONE!)
+    - admin status (DONE!)
+    - change password (DONE!)
+
+- Escape to dismiss notification (DONE!)
 
 - Admin stuffs:
-    - Add tags
+    - Add tags (DONE!)
     - Edit question
     - Edit post
     - Edit comment

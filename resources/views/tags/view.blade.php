@@ -58,9 +58,9 @@
                                 @endforeach
                             </span>
                         </div>
-                        <div class="col-sm-2 hidden-xs" style="align-self: center;">
-                            <div  style="vertical-align: middle">
-                                <table style="top:50%; position: relative;">
+                        <div class="col-sm-2 hidden-xs" style="height:7em; display: flex; justify-content: center; flex-direction: column;">
+                            <div>
+                                <table >
                                     {{--<tr>--}}
                                     {{--<td><span class="fa fa-group"></span></td>--}}
                                     {{--<td>&nbsp;</td>--}}

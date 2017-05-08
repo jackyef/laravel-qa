@@ -42,6 +42,7 @@ class UserController extends Controller
 	        $request->session()->regenerateToken();
 	        $request->session()->put('username', $users[0]->username);
 	        $request->session()->put('email', $users[0]->email);
+	        $request->session()->put('is_admin', $users[0]->is_admin);
 	        $request->session()->put('id', $users[0]->id);
 //
 //        $user = array(
@@ -64,6 +65,27 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function changePassword(Request $request){
+        $user = User::where('password', sha1($request->old_password))
+                    ->where('id', $request->user_id)
+                    ->first();
+        if($user === null){
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'danger');
+            $request->session()->flash('notification_msg', 'The password you provided is incorrect.');
+        } else {
+            $user->password = sha1($request->new_password);
+            $user->save();
+
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'success');
+            $request->session()->flash('notification_msg', 'Your password is successfully changed! Try not to forget it!');
+        }
+
+        return redirect()->back();
+    }
+
     public function showPath(Request $request){
 		$uri = $request->path();
 		echo '<br> URI: '. $uri;

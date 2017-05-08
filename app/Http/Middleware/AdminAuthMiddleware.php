@@ -3,9 +3,8 @@
 namespace app\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Session;
 
-class MyAuthMiddleware
+class AdminAuthMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,13 +15,10 @@ class MyAuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!Session::has('username')){
+        if(!Session::get('is_admin') !== 1){
             Session::flash('notification', TRUE);
             Session::flash('notification_type', 'danger');
-            Session::flash('notification_msg', 'You need to log in to do that.');
-            if($request->path() === 'ask'){
-                return redirect()->action('MainController@index');
-            }
+            Session::flash('notification_msg', 'You don\'t have the privileges to do that.');
             return redirect()->back();
         }
         return $next($request);

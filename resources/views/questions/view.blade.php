@@ -62,7 +62,7 @@
             <div class="col-xs-2">
                 <center>
                     &nbsp;<a href="
-                            {{ (!$answers[0]->voted) ? url("/vote/".$answers[0]->id) : '#'}}"
+                            {{ (!$answers[0]->voted) ? url("/vote/".$answers[0]->id) : url("/unvote/".$answers[0]->id)}}"
                             {!! ($answers[0]->voted) ? 'data-toggle="tooltip" data-placement="top" title="You already voted for this post"' : '' !!}><span class="
                              @if (!$answers[0]->voted)
                                 unvoted
@@ -75,10 +75,20 @@
                 <br/>
             </div>
         </div>
+        {{--<div class="col-xs-12">--}}
+            {{--<!-- comments here -->--}}
+
+            {{--<!-- form to add comments here -->--}}
+            {{--<form action="{{url('/comment')}}">--}}
+                {{--<input type="hidden" name="_token" value="{{ csrf_token() }}"/>--}}
+                {{--<input type="hidden" name="post_id" value="{{$first_post->id}}"/>--}}
+                {{--<input type="text" class="form-control" placeholder="Comment here... (max 200 characters)" />--}}
+            {{--</form>--}}
+        {{--</div>--}}
     </div>
     <hr/>
     @if($question->accepted_answer_id !== 0)
-        <h3>Accepted answer</h3>
+        <h3>Accepted answer <i class="fa fa-check" style="color: rgb(76, 175, 80);"></i></h3>
         <div class="row">
             <div class="col-xs-12">
                 <div class="col-xs-10 post">
@@ -87,7 +97,7 @@
                 <div class="col-xs-2">
                     <center>
                         &nbsp;<a href="
-                                {{ (!$accepted_answer->voted) ? url("/vote/$accepted_answer->id") : '#'}}"
+                                {{ (!$accepted_answer->voted) ? url("/vote/$accepted_answer->id") : url("/unvote/".$accepted_answer->id)}}"
                                 {!! ($accepted_answer->voted) ? 'data-toggle="tooltip" data-placement="top" title="You already voted for this post"' : '' !!}><span class="
                                  @if (!$accepted_answer->voted)
                                     unvoted
@@ -114,7 +124,7 @@
                 <div class="col-xs-12">
                     <div class="col-sm-12 poster">
                         answer given by
-                        <a href="{{url("/profile/$accepted_answer->user_id")}}">
+                        <a href="{{url("/profile/$accepted_answer->username")}}">
                             {{$accepted_answer->username}}</a> on <span data-time-format="time-ago" data-time-value="{{strtotime($accepted_answer->created_at)}}"></span>
                     </div>
                 </div>
@@ -139,7 +149,7 @@
                     <div class="col-xs-2">
                         <center>
                             &nbsp;<a href="
-                                    {{ (!$answer->voted) ? url("/vote/$answer->id") : '#'}}"
+                                    {{ (!$answer->voted) ? url("/vote/$answer->id") : url("/unvote/".$answer->id)}}"
                                     {!! ($answer->voted) ? 'data-toggle="tooltip" data-placement="top" title="You already voted for this post"' : '' !!}><span class="
                                      @if (!$answer->voted)
                                         unvoted
@@ -166,7 +176,7 @@
                     <div class="col-xs-12">
                         <div class="col-sm-12 poster">
                             answer given by
-                            <a href="{{url("/profile/$answer->user_id")}}">
+                            <a href="{{url("/profile/$answer->username")}}">
                                 {{$answer->username}}</a> on <span data-time-format="time-ago" data-time-value="{{strtotime($answer->created_at)}}"></span>
                         </div>
                     </div>
@@ -232,7 +242,7 @@
     <div class="row hidden-xs">
         <div class="col-sm-4" style="color:gray">by</div>
         <div class="col-sm-8">
-            <a href="{{url("/profile/$first_post->user_id")}}">
+            <a href="{{url("/profile/$first_post->username")}}">
                 {{$first_post->username}}
             </a></div>
     </div>

@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 
 use app\Post;
 use app\Question;
+use app\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -311,6 +312,15 @@ class MainController extends Controller
         }
 
         return view('tags.view', $data);
+    }
+
+    public function profile($username, Request $request){
+        $data = [];
+        $data['prof_username'] = $username;
+        $user = User::whereUsername($username)->first();
+        $data['user'] = $user;
+
+        return view('profiles.view', $data);
     }
 
     public function seed(){

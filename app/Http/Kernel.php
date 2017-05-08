@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
 		'First' => \app\Http\Middleware\FirstMiddleware::class,
 		'Second' => \app\Http\Middleware\SecondMiddleware::class,
         'MyAuth' => \app\Http\Middleware\MyAuthMiddleware::class,
+        'AdminAuth' => \app\Http\Middleware\AdminAuthMiddleware::class,
     ];
 }
