@@ -49,7 +49,7 @@
                             </div>
                             <div class="card-description" style="font-size: .9em;">Asked
                                 <span data-time-format="time-ago" data-time-value="{{strtotime($question['created_at'])}}"></span>
-                                by {{$question['asker']}}
+                                by <a href="{{url('/profile/'.$question['asker'])}}">{{$question['asker']}}</a>
 
                             </div>
                             <br/>
@@ -58,9 +58,9 @@
                             @endforeach
                             </span>
                         </div>
-                        <div class="col-sm-2 hidden-xs" style="align-self: center;">
-                            <div  style="vertical-align: middle">
-                                <table style="top:50%; position: relative;">
+                        <div class="col-sm-2 hidden-xs"  style="height:7em; display: flex; justify-content: center; flex-direction: column;">
+                            <div>
+                                <table>
                                     {{--<tr>--}}
                                         {{--<td><span class="fa fa-group"></span></td>--}}
                                         {{--<td>&nbsp;</td>--}}

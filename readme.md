@@ -1,51 +1,59 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jackyef/asset-labeling-system/issues)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Laravel QA
+---
+A simple Question and Answers web-app built using Laravel 5. 
 
-## About Laravel
+Check out the live-demo at: http://jackyefubuntu16.southeastasia.cloudapp.azure.com/laravelqa
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+Contact me
+---
+[LinkedIn](https://www.linkedin.com/in/jacky-efendi-094643a1/)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+[Instagram](https://www.instagram.com/_u/jackyef_)
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+[![alt text][2.1]][2]
+[![alt text][3.1]][3]
+[![alt text][6.1]][6]
 
-## Learning Laravel
+[2]: http://www.facebook.com/zhouyongchao
+[3]: https://plus.google.com/+JackyEfendi1
+[6]: http://www.github.com/jackyef
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+[1.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
+[2.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
+[3.1]: http://i.imgur.com/yCsTjba.png (google plus icon with padding)
+[4.1]: http://i.imgur.com/YckIOms.png (tumblr icon with padding)
+[5.1]: http://i.imgur.com/1AGmwO3.png (dribbble icon with padding)
+[6.1]: http://i.imgur.com/0o48UoR.png (github icon with padding)
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Setup
+---
+1. Create a database named `laravelqa_db` in your MySQL/MariaDB database server
+2. Setup your LAMP environment and copy the project folders and files into your `public_html` folder
+3. Configure your hostname and database credential in the `.env` file
+4. Run `php artisan migrate` to setup the database
+5. If you are using a Linux-based machine, you need to give the following permission
+    - `chmod -R 755 laravelqa`
+    - `chmod -R o+w laravelqa/storage`
+6. Done!
 
-## Laravel Sponsors
+What is this?
+------------
+Basically it's a poor-man [Stack Overflow](https://stackoverflow.com) (very very, VERY poor)
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+Features 
+---------
+- Asking questions
+- Posting answers
+- Voting up questions/answers
+- Accept an answer 
+- Question-tagging
+- Very basic user registration and login
+    
+What's next
+-----------
+This is a very-simple project that I worked on in a short period of time to learn and get myself familiar with Laravel 5.
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- **[Codecourse](https://www.codecourse.com)**
-- [Fragrantica](https://www.fragrantica.com)
+Currently, I have no plan to work on this, for an indefinite amount of time. Feel free to fork the repo to modify it as you see fit.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

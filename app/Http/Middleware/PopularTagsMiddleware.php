@@ -28,6 +28,7 @@ class PopularTagsMiddleware
                   qht.tag_id, t.tag
                 ORDER BY
                   count DESC
+                LIMIT 10
             ");
             Session::put('popular_tags', $tags);
         }

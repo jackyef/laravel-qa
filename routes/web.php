@@ -23,16 +23,24 @@ Route::post('/login', 'UserController@authLogin');
 Route::post('/signup', 'UserController@validateSignup');
 Route::get('/logout', 'UserController@logout');
 
+Route::get('/profile/{username}', 'MainController@profile');
+Route::post('/changepassword', 'UserController@changePassword');
+
 Route::get('/ask', 'QuestionController@newQuestionForm');
 Route::post('/ask', 'QuestionController@newQuestionSubmit');
 
 Route::get('/question/{question}', 'MainController@question');
 Route::get('/vote/{post_id}', 'QuestionController@votePost');
+Route::get('/unvote/{post_id}', 'QuestionController@unvotePost');
 Route::post('/question/answer', 'QuestionController@answer');
 Route::post('/question/accept-answer', 'QuestionController@acceptAnswer');
 
 Route::get('/tag/{tag}', 'MainController@tag');
+Route::get('/about', function(){
+    return view('about');
+});
 
+Route::post('/add-tags', 'AdminController@addTags');
 // for testing only!
 //Route::get('/seed', 'MainController@seed');
 

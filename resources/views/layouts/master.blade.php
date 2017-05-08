@@ -8,7 +8,7 @@
     <link href="{{url('css/material-kit.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('css/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{url('css/tokenize2.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url('css/tokenize2.css')}}" rel="stylesheet" type="text/css">
     <script src="{{url('js/jquery.min.js')}}"></script>
     <script src="{{url('js/jquery-ui.min.js')}}"></script>
     <script src="{{url('js/moment.js')}}"></script>
@@ -18,7 +18,7 @@
     <script src="{{url('js/material-kit.js')}}"></script>
     <script src="{{url('js/material.min.js')}}"></script>
     <script src="{{url('js/nouislider.min.js')}}"></script>
-    <script src="{{url('js/tokenize2.min.js')}}"></script>
+    <script src="{{url('js/tokenize2.js')}}"></script>
     <script>
         $(document).ready(function(){
             $( "[data-time-format]" ).each(function() {
@@ -31,7 +31,11 @@
                         break;
                 }
             });
-
+            $(document).keyup(function(e) {
+                if (e.keyCode == 27) { // escape key maps to keycode `27`
+                    $('.notification').hide();
+                }
+            });
 //            setTimeout(function(){
 //                $(".notification").fadeIn('slow');
 //            }, 200);
@@ -88,8 +92,8 @@
                                 <span class="fa fa-user-circle"></span>
                                 {{Session::get('username')}} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><span class="fa fa-user"></span> Profile</a></li>
-                                <li><a href="#"><span class="fa fa-lock"></span> Change password</a></li>
+                                <li><a href="{{url('/profile/'.Session::get('username'))}}"><span class="fa fa-user"></span> Profile</a></li>
+                                {{--<li><a href="#"><span class="fa fa-lock"></span> Change password</a></li>--}}
                                 <li><a href="{{url('/logout')}}"><span class="fa fa-sign-out"></span> Logout</a></li>
                             </ul>
                         </li>

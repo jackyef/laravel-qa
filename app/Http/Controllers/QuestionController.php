@@ -70,7 +70,7 @@ class QuestionController extends Controller
 
         $request->session()->flash('notification', TRUE);
         $request->session()->flash('notification_type', 'success');
-        $request->session()->flash('notification_msg', 'Question asked! You will be notified when people give answers to your question!');
+        $request->session()->flash('notification_msg', 'Question asked! Check again later to see if people have given answers to your question!');
 
         return redirect()->action('MainController@question', ['question' => $question_id]);
     }
@@ -102,6 +102,38 @@ class QuestionController extends Controller
             $request->session()->flash('notification', TRUE);
             $request->session()->flash('notification_type', 'danger');
             $request->session()->flash('notification_msg', 'Uh oh, something went wrong while trying to register your vote.');
+        }
+
+        return redirect()->to(url()->previous().'#'. $post_id);
+    }
+
+    public function unvotePost($post_id, Request $request){
+        DB::beginTransaction();
+
+        try {
+            DB::delete("
+                DELETE FROM user_voted_posts 
+                WHERE 
+                post_id = ? AND
+                user_id = ?
+            ", [$post_id, $request->session()->get('id')]);
+
+            DB::update("
+                UPDATE posts
+                SET votes = votes - 1
+                WHERE id = ?
+            ", [$post_id]);
+            DB::commit();
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'success');
+            $request->session()->flash('notification_msg', 'Your vote has been canceled!');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+            $request->session()->flash('notification', TRUE);
+            $request->session()->flash('notification_type', 'danger');
+            $request->session()->flash('notification_msg', 'Uh oh, something went wrong while trying to unregister your vote.');
         }
 
         return redirect()->to(url()->previous().'#'. $post_id);
