@@ -4,7 +4,7 @@ Laravel QA
 ---
 A simple Question and Answers web-app built using Laravel 5. 
 
-Check out the live-demo at: http://jackyefubuntu16.southeastasia.cloudapp.azure.com/laravelqa
+Check out the live-demo at: http://jackyefubuntu16.southeastasia.cloudapp.azure.com/laravelqa/public
 
 Contact me
 ---
