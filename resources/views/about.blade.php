@@ -52,7 +52,7 @@
                 <br/>
                 <br/>
                 <div class="social-buttons">
-                    <a href="https://github.com/jackyef/asset-labeling-system" target="_blank"><br/>
+                        <a href="https://github.com/jackyef/" target="_blank"><br/>
                         <button class="btn btn-fab" style="background-color: rgb(36,41,46);">
                             <span class="fa fa-github " style="min-width: 1em;"></span>
                         </button></a>
